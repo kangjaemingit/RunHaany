@@ -39,6 +39,7 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
     RelativeLayout relativeLayout;
     LinearLayout linearLayout;
 
+    //파이어 베이스 데이터베이스 사용
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("video/hard");
 
@@ -59,7 +60,7 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
         // 버튼 연결
         btn_end = findViewById(R.id.btn_end);
 
-
+        //파이어 베이스 동영상 URl받아오기
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

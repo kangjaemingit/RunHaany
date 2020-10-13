@@ -79,6 +79,8 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
                 tv_bpm.setText(String.valueOf(random_value));
             }
         };
+
+        //파이어 베이스 동영상 URl받아오기
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
