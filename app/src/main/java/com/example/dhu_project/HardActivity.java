@@ -12,12 +12,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class HardActivity extends AppCompatActivity implements View.OnClickListener {
     private VideoView vv;
-    private String str_videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+    private String str_videoUrl = "";
+            //"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
     private TextView tv_time_mm;
     private TextView tv_time_ss;
@@ -30,6 +38,9 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
 
     RelativeLayout relativeLayout;
     LinearLayout linearLayout;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("video/hard");
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +59,20 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
         // 버튼 연결
         btn_end = findViewById(R.id.btn_end);
 
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                str_videoUrl = value;
+                vv.setVideoURI(Uri.parse(str_videoUrl));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         // CountDown
         countDownTimer = new CountDownTimer(5*1000,10) {

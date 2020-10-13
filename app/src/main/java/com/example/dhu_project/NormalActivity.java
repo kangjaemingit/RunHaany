@@ -14,12 +14,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class NormalActivity extends AppCompatActivity implements View.OnClickListener {
     private VideoView vv;
-    private String str_videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+    private String str_videoUrl = "";
+            //"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
     private TextView tv_time_mm;
     private TextView tv_time_ss;
@@ -34,8 +45,15 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
     RelativeLayout relativeLayout;
     LinearLayout linearLayout;
 
+    //파이어 베이스 데이터베이스 사용
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("video/normal");
+    DatabaseReference clear = database.getReference("timer/normal");
+    int c = 0;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_normal);
         // TextView 연결
@@ -61,6 +79,20 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
                 tv_bpm.setText(String.valueOf(random_value));
             }
         };
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                str_videoUrl = value;
+                vv.setVideoURI(Uri.parse(str_videoUrl));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         class BPM_Runnable implements Runnable{
             @Override
@@ -102,12 +134,16 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
                 btn_end.setOnClickListener(NormalActivity.this);
                 vv.pause();
                 tv_bpm.setText("0");
+                Map<String, Object> task = new HashMap<String, Object>();
+                // 클리어 수
+                task.put("timer/normal/clear", c++);
+                clear.updateChildren(task);
             }
         };
 
         // VideoView 연결
         vv = findViewById(R.id.videoVideo_normal);
-        vv.setVideoURI(Uri.parse(str_videoUrl));
+        //vv.setVideoURI(Uri.parse(str_videoUrl));
 
         vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override

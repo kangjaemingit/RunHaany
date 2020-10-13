@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "574323105832",
+    "firebase_url": "https://dhuprojectfirebase.firebaseio.com",
+    "project_id": "dhuprojectfirebase",
+    "storage_bucket": "dhuprojectfirebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:574323105832:android:8e2096c63938a39dc1d51d",
+        "android_client_info": {
+          "package_name": "com.example.dhu_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "574323105832-2fip8hkdm98jops8bsmi2erhpbnj3vsi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHr9XbHq9uEV0Zu49r0FywETUy4jX40CM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "574323105832-2fip8hkdm98jops8bsmi2erhpbnj3vsi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
