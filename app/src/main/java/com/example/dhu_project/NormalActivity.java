@@ -44,12 +44,12 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
 
     RelativeLayout relativeLayout;
     LinearLayout linearLayout;
-
+    Map<String, Object> task = new HashMap<String, Object>();
     //파이어 베이스 데이터베이스 사용
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("video/normal");
-    DatabaseReference clear = database.getReference("timer/normal");
-    int c = 0;
+    DatabaseReference clear = database.getReference();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
@@ -117,7 +117,7 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
 
 
         // CountDown
-        countDownTimer = new CountDownTimer(20*1000,10) {
+        countDownTimer = new CountDownTimer(5*1000,10) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // 시간을 분, 초, 밀리초 단위로 보여주게 하기 0.01 초 단위
@@ -130,16 +130,16 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onFinish() {
+
                 // 끝났다는 메시지 띄우기
                 // 숨겨놓은 리니어 레이아웃 보이기
                 linearLayout.setVisibility(View.VISIBLE);
                 btn_end.setOnClickListener(NormalActivity.this);
                 vv.pause();
                 tv_bpm.setText("0");
-                Map<String, Object> task = new HashMap<String, Object>();
-                // 클리어 수
-                task.put("timer/normal/clear", c++);
-                clear.updateChildren(task);
+
+
+
             }
         };
 
@@ -174,6 +174,21 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
         //
         switch (v.getId()){
             case R.id.btn_end:
+                // 클리어 수
+                clear.child("timer/normal/clear").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int value = snapshot.getValue(int.class);
+                        int int_value = value+1;
+                        task.put("timer/normal/clear", int_value);
+                        clear.updateChildren(task);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();

@@ -22,6 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class HardActivity extends AppCompatActivity implements View.OnClickListener {
     private VideoView vv;
     private String str_videoUrl = "";
@@ -42,6 +45,8 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
     //파이어 베이스 데이터베이스 사용
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("video/hard");
+    DatabaseReference clear = database.getReference();
+    Map<String, Object> task = new HashMap<String, Object>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -129,6 +134,20 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
         //
         switch (v.getId()){
             case R.id.btn_end:
+                clear.child("timer/hard/clear").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int value = snapshot.getValue(int.class);
+                        int int_value = value+1;
+                        task.put("timer/hard/clear", int_value);
+                        clear.updateChildren(task);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
