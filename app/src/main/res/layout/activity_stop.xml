@@ -1,17 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:id="@+id/relativelayout">
 
-    <TextView
-        android:id="@+id/textView"
+    <VideoView
+        android:id="@+id/videoVideo_stop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="스톱워치"
-        android:textSize="50dp"/>
+        android:layout_height="match_parent"
+        android:clickable="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="120dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="시간 : "
+                android:textColor="@android:color/black"
+                android:textSize="40dp" />
+
+            <Chronometer
+                android:id="@+id/chronometer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="40dp"/>
+
+            <Button
+                android:id="@+id/btn_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="시작" />
+
+            <Button
+                android:id="@+id/btn_pause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="일시정지"
+                android:visibility="gone"
+                />
+
+            <Button
+                android:id="@+id/btn_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="초기화" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="right">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="♥BPM : "
+                android:textColor="@android:color/black"
+                android:textSize="40dp" />
+
+            <TextView
+                android:id="@+id/bpm"
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:text="000"
+                android:textColor="@android:color/black"
+                android:textSize="40dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/end_BoxLayout"
+        android:layout_centerInParent="true"
+        android:layout_width="500dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="게임이 종료되었습니다."
+            android:textColor="@android:color/black"
+            android:textSize="40sp"/>
+
+        <Button
+            android:id="@+id/btn_end"
+            android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="나가기" />
+    </LinearLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

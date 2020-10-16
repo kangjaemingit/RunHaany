@@ -44,6 +44,7 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
 
     RelativeLayout relativeLayout;
     LinearLayout linearLayout;
+
     Map<String, Object> task = new HashMap<String, Object>();
     //파이어 베이스 데이터베이스 사용
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -69,16 +70,7 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
         // 버튼 연결
         btn_end = findViewById(R.id.btn_end);
 
-        // BPM 랜덤값 띄우기(1초당)
-        bpm_handler = new Handler(){
-            @Override
-            public void handleMessage(Message msg) {
-                double random = Math.random();
-                int random_value = (int)(random * 100) + 60;
-                //random_value = (int)(random * 150) + 60;
-                tv_bpm.setText(String.valueOf(random_value));
-            }
-        };
+
 
         //파이어 베이스 동영상 URl받아오기
         myRef.addValueEventListener(new ValueEventListener() {
@@ -95,13 +87,23 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
 
+        // BPM 랜덤값 띄우기(1초당)
+        bpm_handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                double random = Math.random();
+                int random_value = (int)(random * 40) + 80;
+                //random_value = (int)(random * 150) + 60;
+                tv_bpm.setText(String.valueOf(random_value));
+            }
+        };
 
         class BPM_Runnable implements Runnable{
             @Override
             public void run(){
                 while(true){
                     try{
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -117,7 +119,7 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
 
 
         // CountDown
-        countDownTimer = new CountDownTimer(5*1000,10) {
+        countDownTimer = new CountDownTimer(20*1000,10) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // 시간을 분, 초, 밀리초 단위로 보여주게 하기 0.01 초 단위

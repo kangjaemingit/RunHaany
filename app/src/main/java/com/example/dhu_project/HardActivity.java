@@ -5,6 +5,8 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -38,6 +40,7 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
     private Button btn_end;
 
     CountDownTimer countDownTimer;
+    private static Handler bpm_handler;
 
     RelativeLayout relativeLayout;
     LinearLayout linearLayout;
@@ -80,6 +83,36 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        // BPM 랜덤값 띄우기(1초당)
+        bpm_handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                double random = Math.random();
+                int random_value = (int)(random * 40) + 80;
+                tv_bpm.setText(String.valueOf(random_value));
+            }
+        };
+
+        class BPM_Runnable implements Runnable{
+            @Override
+            public void run(){
+                while(true){
+                    try{
+                        Thread.sleep(2000);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                    bpm_handler.sendEmptyMessage(0);
+                }
+            }
+        }
+
+        BPM_Runnable bpm = new BPM_Runnable();
+        Thread bpm_thread = new Thread(bpm);
+        bpm_thread.start();
+
+
         // CountDown
         countDownTimer = new CountDownTimer(5*1000,10) {
             @Override
@@ -102,6 +135,7 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
                 tv_bpm.setText("0");
             }
         };
+
 
         // VideoView 연결
         vv = findViewById(R.id.videoVideo_hard);

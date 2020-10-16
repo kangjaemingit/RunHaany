@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="12dp"
+    android:background="@drawable/img_mainbackground"
     >
 
     <TextView
@@ -18,7 +19,7 @@
     <LinearLayout
         android:layout_marginTop="100dp"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="320dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -26,45 +27,37 @@
             android:id="@+id/main_normal"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_width="320dp"
+            android:layout_width="280dp"
             android:layout_height="320dp"
-            android:background="@drawable/style123"
-            android:clickable="true"
-            android:text="노말"
-            android:textColor="@android:color/white"
-            android:textSize="100dp"/>
+            android:background="@drawable/img_normalbutton"
+            android:clickable="true" />
+
         <TextView
             android:id="@+id/main_hard"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_width="320dp"
+            android:layout_width="280dp"
             android:layout_height="320dp"
-            android:background="@android:color/black"
+            android:background="@drawable/img_hardbutton"
             android:clickable="true"
-            android:text="하드"
-            android:textColor="@android:color/white"
             android:textSize="100dp"/>
         <TextView
             android:id="@+id/main_stop"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_width="320dp"
+            android:layout_width="280dp"
             android:layout_height="320dp"
-            android:background="@android:color/black"
+            android:background="@drawable/img_stopwatchbutton"
             android:clickable="true"
-            android:text="스톱워치"
-            android:textColor="@android:color/white"
             android:textSize="100dp"/>
         <TextView
             android:id="@+id/main_record"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
-            android:layout_width="200dp"
+            android:layout_width="280dp"
             android:layout_height="320dp"
-            android:background="@android:color/black"
+            android:background="@drawable/img_recordbutton"
             android:clickable="true"
-            android:text="기록"
-            android:textColor="@android:color/white"
             android:textSize="100dp"/>
     </LinearLayout>
 

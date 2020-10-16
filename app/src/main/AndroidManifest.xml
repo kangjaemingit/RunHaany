@@ -24,12 +24,14 @@
             android:name=".LoginActivity"
             android:theme="@style/LodingTheme" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".RecordActivity" />
+        <activity android:name=".RecordActivity"
+            android:theme="@style/Theme.Design.NoActionBar"/>
         <activity android:name=".NormalActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".HardActivity"
             android:theme="@style/Theme.Design.NoActionBar"/>
-        <activity android:name=".StopActivity" />
+        <activity android:name=".StopActivity"
+            android:theme="@style/Theme.Design.NoActionBar"/>
     </application>
 
 </manifest>

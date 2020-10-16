@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.main_stop:
                 newActivity(this, StopActivity.class);
+                break;
             case R.id.main_record:
                 newActivity(this, RecordActivity.class);
                 break;
