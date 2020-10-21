@@ -11,10 +11,13 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@android:color/black"
-        android:text="게임 이름"
+        android:text="달 려 라  한 의"
+        android:textStyle="bold"
         android:textColor="@android:color/white"
-        android:textSize="30dp" />
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="80dp" />
 
     <LinearLayout
         android:layout_marginTop="100dp"
@@ -29,7 +32,7 @@
             android:layout_marginLeft="16dp"
             android:layout_width="280dp"
             android:layout_height="320dp"
-            android:background="@drawable/img_normalbutton"
+            android:background="@drawable/img_normal_button"
             android:clickable="true" />
 
         <TextView
@@ -38,7 +41,7 @@
             android:layout_marginLeft="16dp"
             android:layout_width="280dp"
             android:layout_height="320dp"
-            android:background="@drawable/img_hardbutton"
+            android:background="@drawable/img_hard_button"
             android:clickable="true"
             android:textSize="100dp"/>
         <TextView
@@ -47,7 +50,7 @@
             android:layout_marginLeft="16dp"
             android:layout_width="280dp"
             android:layout_height="320dp"
-            android:background="@drawable/img_stopwatchbutton"
+            android:background="@drawable/img_stopwatch_button"
             android:clickable="true"
             android:textSize="100dp"/>
         <TextView
@@ -56,7 +59,7 @@
             android:layout_marginLeft="16dp"
             android:layout_width="280dp"
             android:layout_height="320dp"
-            android:background="@drawable/img_recordbutton"
+            android:background="@drawable/img_record_button"
             android:clickable="true"
             android:textSize="100dp"/>
     </LinearLayout>
