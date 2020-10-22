@@ -5,22 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="12dp"
+    android:gravity="center"
     android:background="@drawable/img_mainbackground"
     >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="달 려 라  한 의"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:textSize="80dp" />
-
     <LinearLayout
-        android:layout_marginTop="100dp"
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:gravity="center"
