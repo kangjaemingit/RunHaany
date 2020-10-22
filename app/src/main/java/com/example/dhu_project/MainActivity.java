@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView tv_normal;
     TextView tv_hard;
@@ -21,8 +21,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         tv_normal = (TextView) findViewById(R.id.main_normal);
-        tv_hard= (TextView) findViewById(R.id.main_hard);
-        tv_stop= (TextView) findViewById(R.id.main_stop);
+        tv_hard = (TextView) findViewById(R.id.main_hard);
+        tv_stop = (TextView) findViewById(R.id.main_stop);
         tv_record = (TextView) findViewById(R.id.main_record);
 
         tv_normal.setOnClickListener(this);
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.main_normal:
                 newActivity(this, NormalActivity.class);
                 break;

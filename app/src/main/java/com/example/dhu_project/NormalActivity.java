@@ -30,7 +30,7 @@ import java.util.Map;
 public class NormalActivity extends AppCompatActivity implements View.OnClickListener {
     private VideoView vv;
     private String str_videoUrl = "";
-            //"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+    //"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
     private TextView tv_time_mm;
     private TextView tv_time_ss;
@@ -71,7 +71,6 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
         btn_end = findViewById(R.id.btn_end);
 
 
-
         //파이어 베이스 동영상 URl받아오기
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -88,23 +87,23 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
         });
 
         // BPM 랜덤값 띄우기(1초당)
-        bpm_handler = new Handler(){
+        bpm_handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 double random = Math.random();
-                int random_value = (int)(random * 40) + 80;
+                int random_value = (int) (random * 40) + 80;
                 //random_value = (int)(random * 150) + 60;
                 tv_bpm.setText(String.valueOf(random_value));
             }
         };
 
-        class BPM_Runnable implements Runnable{
+        class BPM_Runnable implements Runnable {
             @Override
-            public void run(){
-                while(true){
-                    try{
+            public void run() {
+                while (true) {
+                    try {
                         Thread.sleep(2000);
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -119,15 +118,15 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
 
 
         // CountDown
-        countDownTimer = new CountDownTimer(20*1000,10) {
+        countDownTimer = new CountDownTimer(20 * 1000, 10) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // 시간을 분, 초, 밀리초 단위로 보여주게 하기 0.01 초 단위
-                tv_time_mm.setText(""+millisUntilFinished/(60*1000));
-                millisUntilFinished = millisUntilFinished%(60*1000);
-                tv_time_ss.setText(":"+millisUntilFinished/(1000));
-                millisUntilFinished = millisUntilFinished%(1000);
-                tv_time_pp.setText("."+millisUntilFinished/(10));
+                tv_time_mm.setText("" + millisUntilFinished / (60 * 1000));
+                millisUntilFinished = millisUntilFinished % (60 * 1000);
+                tv_time_ss.setText(":" + millisUntilFinished / (1000));
+                millisUntilFinished = millisUntilFinished % (1000);
+                tv_time_pp.setText("." + millisUntilFinished / (10));
             }
 
             @Override
@@ -139,7 +138,6 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
                 btn_end.setOnClickListener(NormalActivity.this);
                 vv.pause();
                 tv_bpm.setText("0");
-
 
 
             }
@@ -174,14 +172,14 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         //
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_end:
                 // 클리어 수
                 clear.child("timer/normal/clear").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int value = snapshot.getValue(int.class);
-                        int int_value = value+1;
+                        int int_value = value + 1;
                         task.put("timer/normal/clear", int_value);
                         clear.updateChildren(task);
                     }
@@ -201,16 +199,17 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
             vv.start();
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();
-        if(vv != null && vv.isPlaying()) vv.pause();
+        if (vv != null && vv.isPlaying()) vv.pause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(vv != null) vv.stopPlayback();
+        if (vv != null) vv.stopPlayback();
 
     }
 

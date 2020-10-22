@@ -30,7 +30,7 @@ import java.util.Map;
 public class HardActivity extends AppCompatActivity implements View.OnClickListener {
     private VideoView vv;
     private String str_videoUrl = "";
-            //"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+    //"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
     private TextView tv_time_mm;
     private TextView tv_time_ss;
@@ -84,22 +84,22 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         // BPM 랜덤값 띄우기(1초당)
-        bpm_handler = new Handler(){
+        bpm_handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 double random = Math.random();
-                int random_value = (int)(random * 40) + 80;
+                int random_value = (int) (random * 40) + 80;
                 tv_bpm.setText(String.valueOf(random_value));
             }
         };
 
-        class BPM_Runnable implements Runnable{
+        class BPM_Runnable implements Runnable {
             @Override
-            public void run(){
-                while(true){
-                    try{
+            public void run() {
+                while (true) {
+                    try {
                         Thread.sleep(2000);
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -114,15 +114,15 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
 
 
         // CountDown
-        countDownTimer = new CountDownTimer(5*1000,10) {
+        countDownTimer = new CountDownTimer(5 * 1000, 10) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // 시간을 분, 초, 밀리초 단위로 보여주게 하기 0.01 초 단위
-                tv_time_mm.setText(""+millisUntilFinished/(60*1000));
-                millisUntilFinished = millisUntilFinished%(60*1000);
-                tv_time_ss.setText(":"+millisUntilFinished/(1000));
-                millisUntilFinished = millisUntilFinished%(1000);
-                tv_time_pp.setText("."+millisUntilFinished/(10));
+                tv_time_mm.setText("" + millisUntilFinished / (60 * 1000));
+                millisUntilFinished = millisUntilFinished % (60 * 1000);
+                tv_time_ss.setText(":" + millisUntilFinished / (1000));
+                millisUntilFinished = millisUntilFinished % (1000);
+                tv_time_pp.setText("." + millisUntilFinished / (10));
             }
 
             @Override
@@ -166,13 +166,13 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         //
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_end:
                 clear.child("timer/hard/clear").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int value = snapshot.getValue(int.class);
-                        int int_value = value+1;
+                        int int_value = value + 1;
                         task.put("timer/hard/clear", int_value);
                         clear.updateChildren(task);
                     }
@@ -192,16 +192,17 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
             vv.start();
         }
     }
+
     @Override
     protected void onPause() {
         super.onPause();
-        if(vv != null && vv.isPlaying()) vv.pause();
+        if (vv != null && vv.isPlaying()) vv.pause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(vv != null) vv.stopPlayback();
+        if (vv != null) vv.stopPlayback();
 
     }
 

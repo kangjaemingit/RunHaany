@@ -62,30 +62,30 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
 
         // 버튼 연결
         btn_end = findViewById(R.id.btn_end);
-        chronometer = (Chronometer)findViewById(R.id.chronometer);
-        btn_watchstart = (Button)findViewById(R.id.btn_start);
-        btn_watchpause = (Button)findViewById(R.id.btn_pause);
-        btn_watchreset = (Button)findViewById(R.id.btn_reset);
+        chronometer = (Chronometer) findViewById(R.id.chronometer);
+        btn_watchstart = (Button) findViewById(R.id.btn_start);
+        btn_watchpause = (Button) findViewById(R.id.btn_pause);
+        btn_watchreset = (Button) findViewById(R.id.btn_reset);
 
 
         // BPM 랜덤값 띄우기(1초당)
-        bpm_handler = new Handler(){
+        bpm_handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 double random = Math.random();
-                int random_value = (int)(random * 100) + 60;
+                int random_value = (int) (random * 100) + 60;
                 //random_value = (int)(random * 150) + 60;
                 tv_bpm.setText(String.valueOf(random_value));
             }
         };
 
-        class BPM_Runnable implements Runnable{
+        class BPM_Runnable implements Runnable {
             @Override
-            public void run(){
-                while(true){
-                    try{
+            public void run() {
+                while (true) {
+                    try {
                         Thread.sleep(2000);
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -163,7 +163,7 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_end:
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
@@ -179,13 +179,13 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onPause() {
         super.onPause();
-        if(vv != null && vv.isPlaying()) vv.pause();
+        if (vv != null && vv.isPlaying()) vv.pause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(vv != null) vv.stopPlayback();
+        if (vv != null) vv.stopPlayback();
 
     }
 
