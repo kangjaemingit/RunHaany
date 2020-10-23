@@ -139,7 +139,7 @@ public class HardActivity extends AppCompatActivity implements View.OnClickListe
 
         // VideoView 연결
         vv = findViewById(R.id.videoVideo_hard);
-        vv.setVideoURI(Uri.parse(str_videoUrl));
+        //vv.setVideoURI(Uri.parse(str_videoUrl));
 
         vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override

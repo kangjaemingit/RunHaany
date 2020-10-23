@@ -31,7 +31,8 @@ import java.util.Map;
 
 public class StopActivity extends AppCompatActivity implements View.OnClickListener {
     private VideoView vv;
-    private String str_videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+    private String str_videoUrl = "";
+            //"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 
     private TextView tv_bpm;
 
@@ -46,6 +47,12 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
 
     RelativeLayout relativeLayout;
     LinearLayout linearLayout;
+
+    //파이어 베이스 데이터베이스 사용
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference("video/stopwatch");
+    DatabaseReference clear = database.getReference();
+    Map<String, Object> task = new HashMap<String, Object>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +73,21 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
         btn_watchstart = (Button)findViewById(R.id.btn_start);
         btn_watchpause = (Button)findViewById(R.id.btn_pause);
         btn_watchreset = (Button)findViewById(R.id.btn_reset);
+
+        //파이어 베이스 동영상 URl받아오기
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String value = snapshot.getValue(String.class);
+                str_videoUrl = value;
+                vv.setVideoURI(Uri.parse(str_videoUrl));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         // BPM 랜덤값 띄우기(1초당)
@@ -122,6 +144,12 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
         btn_watchreset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                long current = SystemClock.elapsedRealtime() - chronometer.getBase();
+                int time = (int) (current / 1000);
+
+                clear.child("timer/stopwatch").push().setValue(time);
+
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 stopTime = 0;
                 chronometer.stop();
@@ -138,7 +166,7 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
 
         // VideoView 연결
         vv = findViewById(R.id.videoVideo_stop);
-        vv.setVideoURI(Uri.parse(str_videoUrl));
+       // vv.setVideoURI(Uri.parse(str_videoUrl));
 
         vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
