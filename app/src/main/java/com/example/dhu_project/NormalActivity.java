@@ -119,7 +119,7 @@ public class NormalActivity extends AppCompatActivity implements View.OnClickLis
 
 
         // CountDown
-        countDownTimer = new CountDownTimer(20*1000,10) {
+        countDownTimer = new CountDownTimer(302*1000,10) {
             @Override
             public void onTick(long millisUntilFinished) {
                 // 시간을 분, 초, 밀리초 단위로 보여주게 하기 0.01 초 단위

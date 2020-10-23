@@ -8,6 +8,7 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -32,7 +33,7 @@ import java.util.Map;
 public class StopActivity extends AppCompatActivity implements View.OnClickListener {
     private VideoView vv;
     private String str_videoUrl = "";
-            //"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+
 
     private TextView tv_bpm;
 
@@ -81,6 +82,7 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
                 String value = snapshot.getValue(String.class);
                 str_videoUrl = value;
                 vv.setVideoURI(Uri.parse(str_videoUrl));
+
             }
 
             @Override
@@ -121,6 +123,7 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
         bpm_thread.start();
 
         // 스톱워치 구현
+        // 시작버튼 클릭시
         btn_watchstart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,9 +131,22 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
                 chronometer.start();
                 btn_watchstart.setVisibility(View.GONE);
                 btn_watchpause.setVisibility(View.VISIBLE);
+
+                vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        vv.start();
+                        mp.setLooping(true);
+                    }
+
+                });
+
+                if (!vv.isPlaying()) vv.start();
+
             }
         });
 
+        // 일시정지 버튼 클릭 시
         btn_watchpause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -138,24 +154,30 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
                 chronometer.stop();
                 btn_watchstart.setVisibility(View.VISIBLE);
                 btn_watchpause.setVisibility(View.GONE);
+
+                if (vv.isPlaying()) vv.pause();
+
             }
         });
 
+        // 초기화 버튼 클릭 시
         btn_watchreset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                // 종료 시 시간 데이터베이스 저장
                 long current = SystemClock.elapsedRealtime() - chronometer.getBase();
                 int time = (int) (current / 1000);
 
                 clear.child("timer/stopwatch").push().setValue(time);
 
+                // 타이머 정지
                 chronometer.setBase(SystemClock.elapsedRealtime());
                 stopTime = 0;
                 chronometer.stop();
                 btn_watchstart.setVisibility(View.VISIBLE);
                 btn_watchpause.setVisibility(View.GONE);
 
+                // 끝내기 화면 띄우기, 영상 정지지
                 linearLayout.setVisibility(View.VISIBLE);
                 btn_end.setOnClickListener(StopActivity.this);
                 vv.pause();
@@ -166,11 +188,14 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
 
         // VideoView 연결
         vv = findViewById(R.id.videoVideo_stop);
-       // vv.setVideoURI(Uri.parse(str_videoUrl));
+        //str_videoUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"; // 테스트영상
+        //vv.setVideoURI(Uri.parse(str_videoUrl));
 
-        vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
+
+        vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
-            public void onPrepared(MediaPlayer mp) {
+            public void onCompletion(MediaPlayer mp) {
                 vv.start();
             }
         });
@@ -196,12 +221,10 @@ public class StopActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();
+                break;
         }
 
-        if (vv.isPlaying()) vv.pause();
-        else {
-            vv.start();
-        }
+
     }
 
     @Override
